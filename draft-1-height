@@ -1,0 +1,46 @@
+import matplotlib.pyplot as plt
+
+#rocket stats
+mass = 1.0 # kg
+thrust = 10 # N
+burn_time = 5 # sec
+
+#simulation stats
+g = 9.8 # m/s^2
+time_step = 0.01
+time_max = 10
+
+#start vars
+t = 0
+v = 0
+h = 0
+
+#storage
+times = []
+velocities = []
+heights = []
+
+#prediction (no air resistance)
+while (t <= time_max):
+    if(t <= burn_time):
+        force = thrust
+    else:
+        force = 0
+    
+    a = (force - mass*g)/mass
+    v += a * time_step
+    h += v * time_step
+
+    h = max(h,0)
+
+    times.append(t)
+    velocities.append(v)
+    heights.append(h)
+
+    t += time_step
+
+plt.plot(times, heights)
+plt.xlabel("Time (s)")
+plt.ylabel("Height (m)")
+plt.title("Rocket Height Simulation")
+plt.show()
